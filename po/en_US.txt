@@ -1,0 +1,66 @@
+# Translation template for Hot-Screen-Edges.
+# This file is distributed under the same license as the hot-screen-edges package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Hot-Screen-Edges\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-08 12:15-0400\n"
+"PO-Revision-Date: 2021-02-08 12:15-0400\n"
+"Last-Translator: passingthru67@protonmail.com\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: prefs.js:30
+msgid "<b>Hot Screen Edges</b>"
+msgstr ""
+
+#: prefs.js:37
+msgid ""
+"Select which screen edges to make hot.\n"
+"NOTE: Edges shared by adjacent monitors will be ignored."
+msgstr ""
+
+#: prefs.js:48
+msgid "Top"
+msgstr ""
+
+#: prefs.js:58
+msgid "Bottom"
+msgstr ""
+
+#: prefs.js:68
+msgid "Left"
+msgstr ""
+
+#: prefs.js:78
+msgid "Right"
+msgstr ""
+
+#: prefs.js:88
+msgid "Hot edges on primary monitor only"
+msgstr ""
+
+#: prefs.js:99
+msgid "Hot edges in fullscreen mode"
+msgstr ""
+
+#: prefs.js:130
+msgid "<b>Pressure Options</b>"
+msgstr ""
+
+#: prefs.js:137
+msgid "Select the amount of pressure required to toggle the overview mode."
+msgstr ""
+
+#: prefs.js:149
+msgid "Require pressure to toggle the overview mode"
+msgstr ""
+
+#: prefs.js:159
+msgid "Pressure threshold [px]"
+msgstr ""

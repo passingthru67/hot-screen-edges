@@ -1,0 +1,11 @@
+#!/bin/bash
+# ===========================================================
+# This script creates the en_US.txt file from the extension
+# javascript files containing GetText
+# ===========================================================
+
+root_dir=${PWD}
+files_dir=$root_dir/hot-screen-edges@passingthru67.protonmail.com
+output=$root_dir/po/en_US.txt
+cd "$files_dir/"
+xgettext -o "$output" *.js

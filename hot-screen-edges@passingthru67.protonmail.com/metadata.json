@@ -1,0 +1,10 @@
+{
+    "name": "Hot Screen Edges",
+    "description": "Toggle Gnome Shell's overview mode by pressing the mouse against the monitor(s) screen edges.",
+    "original-author": "passingthru67@protonmail.com",
+    "shell-version": ["3.38"],
+    "url": "https://github.com/passingthru67/hot-screen-edges",
+    "uuid": "hot-screen-edges@passingthru67.protonmail.com",
+    "gettext-domain": "hot-screen-edges",
+    "version": 1
+}

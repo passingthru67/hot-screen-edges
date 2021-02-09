@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions">
+    <enum id='org.gnome.shell.extensions.hot-screen-edges.side'>
+        <value value='0' nick='TOP'/>
+        <value value='1' nick='RIGHT'/>
+        <value value='2' nick='BOTTOM'/>
+        <value value='3' nick='LEFT'/>
+    </enum>
+    <schema path="/org/gnome/shell/extensions/hot-screen-edges/" id="org.gnome.shell.extensions.hot-screen-edges">
+        <key type="b" name="side-top">
+            <default>true</default>
+            <summary>Make top side of screen hot</summary>
+            <description>Make the top side of the screen hot.</description>
+        </key>
+        <key type="b" name="side-right">
+            <default>true</default>
+            <summary>Make right side of screen hot</summary>
+            <description>Make the right side of the screen hot.</description>
+        </key>
+        <key type="b" name="side-bottom">
+            <default>true</default>
+            <summary>Make bottom of screen hot</summary>
+            <description>Make the bottom of the screen hot.</description>
+        </key>
+        <key type="b" name="side-left">
+            <default>true</default>
+            <summary>Make left side of screen hot</summary>
+            <description>Make the left side of the screen hot.</description>
+        </key>
+        <key type="b" name="primary-monitor-only">
+            <default>true</default>
+            <summary>Only create hot edges on primary monitor</summary>
+            <description>Only create hot edges on the primary monitor.</description>
+        </key>
+        <key type="b" name="allow-fullscreen-mode">
+            <default>false</default>
+            <summary>Allow hot edges in fullscreen mode</summary>
+            <description>Allow how screen edges when application is in fullscreen mode.</description>
+        </key>
+        <key type="b" name="require-pressure-to-show">
+            <default>true</default>
+            <summary>Require pressure to show dock (GS38+ only)</summary>
+            <description>Enable or disable requiring pressure to show dock</description>
+        </key>
+        <key type="d" name="pressure-threshold">
+            <default>120</default>
+            <summary>Pressure threshold</summary>
+            <description>Sets how much pressure is needed to show the dock.</description>
+        </key>
+        <key type="b" name="use-pressure-speed-limit">
+            <default>false</default>
+            <summary>Limit pressure sense to slow mouse speeds</summary>
+            <description>Enable or disable limiting pressure sense to slow mouse speeds</description>
+        </key>
+        <key type="d" name="pressure-speed-limit">
+            <default>50</default>
+            <summary>Pressure speed limit</summary>
+            <description>Set maximum speed for pressure sense</description>
+        </key>
+    </schema>
+</schemalist>

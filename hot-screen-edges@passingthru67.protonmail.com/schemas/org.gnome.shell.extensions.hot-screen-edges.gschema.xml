@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-shell-extensions">
-    <enum id='org.gnome.shell.extensions.hot-screen-edges.side'>
-        <value value='0' nick='TOP'/>
-        <value value='1' nick='RIGHT'/>
-        <value value='2' nick='BOTTOM'/>
-        <value value='3' nick='LEFT'/>
+    <enum id='org.gnome.shell.extensions.hot-screen-edges.actions'>
+      <value value='0' nick='TOGGLE_OVERVIEW'/>
+      <value value='1' nick='SWITCH_WORKSPACE'/>
     </enum>
     <schema path="/org/gnome/shell/extensions/hot-screen-edges/" id="org.gnome.shell.extensions.hot-screen-edges">
         <key type="b" name="side-top">
@@ -12,20 +10,40 @@
             <summary>Make top side of screen hot</summary>
             <description>Make the top side of the screen hot.</description>
         </key>
+        <key name="side-top-action" enum="org.gnome.shell.extensions.hot-screen-edges.actions">
+          <default>'TOGGLE_OVERVIEW'</default>
+          <summary>Select what to do when the hot edge is triggered</summary>
+          <description>Select what to do when the hot edge is triggered.</description>
+        </key>
         <key type="b" name="side-right">
             <default>true</default>
             <summary>Make right side of screen hot</summary>
             <description>Make the right side of the screen hot.</description>
+        </key>
+        <key name="side-right-action" enum="org.gnome.shell.extensions.hot-screen-edges.actions">
+          <default>'TOGGLE_OVERVIEW'</default>
+          <summary>Select what to do when the hot edge is triggered</summary>
+          <description>Select what to do when the hot edge is triggered.</description>
         </key>
         <key type="b" name="side-bottom">
             <default>true</default>
             <summary>Make bottom of screen hot</summary>
             <description>Make the bottom of the screen hot.</description>
         </key>
+        <key name="side-bottom-action" enum="org.gnome.shell.extensions.hot-screen-edges.actions">
+          <default>'TOGGLE_OVERVIEW'</default>
+          <summary>Select what to do when the hot edge is triggered</summary>
+          <description>Select what to do when the hot edge is triggered.</description>
+        </key>
         <key type="b" name="side-left">
             <default>true</default>
             <summary>Make left side of screen hot</summary>
             <description>Make the left side of the screen hot.</description>
+        </key>
+        <key name="side-left-action" enum="org.gnome.shell.extensions.hot-screen-edges.actions">
+          <default>'TOGGLE_OVERVIEW'</default>
+          <summary>Select what to do when the hot edge is triggered</summary>
+          <description>Select what to do when the hot edge is triggered.</description>
         </key>
         <key type="b" name="primary-monitor-only">
             <default>true</default>

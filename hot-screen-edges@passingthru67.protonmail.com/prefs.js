@@ -47,6 +47,7 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let topSide = new Gtk.CheckButton({
             label: _("Top"),
             margin_left: 0,
+            margin_right: 5,
             margin_top: 0
         });
         topSide.set_active(this._settings.get_boolean('side-top'));
@@ -57,6 +58,7 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let bottomSide = new Gtk.CheckButton({
             label: _("Bottom"),
             margin_left: 0,
+            margin_right: 5,
             margin_top: 0
         });
         bottomSide.set_active(this._settings.get_boolean('side-bottom'));
@@ -67,6 +69,7 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let leftSide = new Gtk.CheckButton({
             label: _("Left"),
             margin_left: 0,
+            margin_right: 5,
             margin_top: 0
         });
         leftSide.set_active(this._settings.get_boolean('side-left'));
@@ -77,11 +80,56 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let rightSide = new Gtk.CheckButton({
             label: _("Right"),
             margin_left: 0,
+            margin_right: 5,
             margin_top: 0
         });
         rightSide.set_active(this._settings.get_boolean('side-right'));
         rightSide.connect('toggled', Lang.bind(this, function(check) {
             this._settings.set_boolean('side-right', check.get_active());
+        }));
+
+        // Left Side Action
+        let leftSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
+        leftSideActionCombo.append_text(_("Toggle Overview"));
+        leftSideActionCombo.append_text(_("Switch To Workspace"));
+
+        let leftSideAction = this._settings.get_enum('side-left-action');
+        leftSideActionCombo.set_active(leftSideAction);
+        leftSideActionCombo.connect('changed', Lang.bind (this, function(widget) {
+                this._settings.set_enum('side-left-action', widget.get_active());
+        }));
+
+        // Right Side Action
+        let rightSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
+        rightSideActionCombo.append_text(_("Toggle Overview"));
+        rightSideActionCombo.append_text(_("Switch To Workspace"));
+
+        let rightSideAction = this._settings.get_enum('side-right-action');
+        rightSideActionCombo.set_active(rightSideAction);
+        rightSideActionCombo.connect('changed', Lang.bind (this, function(widget) {
+                this._settings.set_enum('side-right-action', widget.get_active());
+        }));
+
+        // Top Side Action
+        let topSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
+        topSideActionCombo.append_text(_("Toggle Overview"));
+        topSideActionCombo.append_text(_("Switch To Workspace"));
+
+        let topSideAction = this._settings.get_enum('side-top-action');
+        topSideActionCombo.set_active(topSideAction);
+        topSideActionCombo.connect('changed', Lang.bind (this, function(widget) {
+                this._settings.set_enum('side-top-action', widget.get_active());
+        }));
+
+        // Bottom Side Action
+        let bottomSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
+        bottomSideActionCombo.append_text(_("Toggle Overview"));
+        bottomSideActionCombo.append_text(_("Switch To Workspace"));
+
+        let bottomSideAction = this._settings.get_enum('side-bottom-action');
+        bottomSideActionCombo.set_active(bottomSideAction);
+        bottomSideActionCombo.connect('changed', Lang.bind (this, function(widget) {
+                this._settings.set_enum('side-bottom-action', widget.get_active());
         }));
 
         let primaryMonitor = new Gtk.CheckButton({
@@ -109,19 +157,26 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         // Add to layout
         let monitorOptionsGrid = new Gtk.Grid({
             row_homogeneous: false,
-            column_homogeneous: true,
+            column_homogeneous: false,
             margin_top: 0,
             margin_left: 0,
             margin_bottom: 10
         });
 
         monitorOptionsGrid.attach(topSide, 0, 0, 1, 1);
-        monitorOptionsGrid.attach(bottomSide, 0, 1, 1, 1);
-        monitorOptionsGrid.attach(leftSide, 1, 0, 1, 1);
-        monitorOptionsGrid.attach(rightSide, 1, 1, 1, 1);
+        monitorOptionsGrid.attach(topSideActionCombo, 1, 0, 1, 1);
 
-        monitorOptionsGrid.attach(primaryMonitor, 0, 2, 2, 1);
-        monitorOptionsGrid.attach(allowFullscreenMode, 0, 3, 2, 1);
+        monitorOptionsGrid.attach(bottomSide, 0, 1, 1, 1);
+        monitorOptionsGrid.attach(bottomSideActionCombo, 1, 1, 1, 1);
+
+        monitorOptionsGrid.attach(leftSide, 0, 2, 1, 1);
+        monitorOptionsGrid.attach(leftSideActionCombo, 1, 2, 1, 1);
+
+        monitorOptionsGrid.attach(rightSide, 0, 3, 1, 1);
+        monitorOptionsGrid.attach(rightSideActionCombo, 1, 3, 1, 1);
+
+        monitorOptionsGrid.attach(primaryMonitor, 0, 4, 2, 1);
+        monitorOptionsGrid.attach(allowFullscreenMode, 0, 5, 2, 1);
 
         this.add(monitorOptionsGrid);
 

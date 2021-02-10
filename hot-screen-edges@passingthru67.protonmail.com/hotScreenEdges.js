@@ -136,13 +136,25 @@ var HotScreenEdgesManager = class HotScreenEdges_HotScreenEdgesManager {
         this._settings.connect('changed::side-top', () => {
             this._updateHotScreenEdges();
         });
+        this._settings.connect('changed::side-top-action', () => {
+            this._updateHotScreenEdges();
+        });
         this._settings.connect('changed::side-bottom', () => {
+            this._updateHotScreenEdges();
+        });
+        this._settings.connect('changed::side-bottom-action', () => {
             this._updateHotScreenEdges();
         });
         this._settings.connect('changed::side-left', () => {
             this._updateHotScreenEdges();
         });
+        this._settings.connect('changed::side-left-action', () => {
+            this._updateHotScreenEdges();
+        });
         this._settings.connect('changed::side-right', () => {
+            this._updateHotScreenEdges();
+        });
+        this._settings.connect('changed::side-right-action', () => {
             this._updateHotScreenEdges();
         });
         this._settings.connect('changed::primary-monitor-only', () => {
@@ -168,6 +180,16 @@ class HotScreenEdge extends Clutter.Actor {
         this._monitor = monitor;
         this._side = side;
         this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.hot-screen-edges');
+
+        if(this._side == St.Side.LEFT) {
+            this._sideAction = this._settings.get_enum('side-left-action')
+        } else if(this._side == St.Side.RIGHT) {
+            this._sideAction = this._settings.get_enum('side-right-action')
+        } else if(this._side == St.Side.TOP) {
+            this._sideAction = this._settings.get_enum('side-top-action')
+        } else if (this._side == St.Side.BOTTOM) {
+            this._sideAction = this._settings.get_enum('side-bottom-action')
+        }
 
         // Initialize non-pressure variables
         this._entered = false;
@@ -290,7 +312,10 @@ class HotScreenEdge extends Clutter.Actor {
 
     _onPressureSensed() {
         this._pressureSensed = true;
-        this._toggleOverview();
+        if (this._sideAction == 0)
+            this._toggleOverview();
+        else
+            this._switchWorkspace();
     }
 
     _setupFallbackEdgeIfNeeded(layoutManager) {
@@ -353,6 +378,28 @@ class HotScreenEdge extends Clutter.Actor {
         }
     }
 
+    _switchWorkspace() {
+        let workspaceManager = global.workspace_manager;
+        let activeWs = workspaceManager.get_active_workspace();
+        let direction;
+
+        if(this._side == St.Side.LEFT) {
+            direction = Meta.MotionDirection.LEFT;
+        } else if(this._side == St.Side.RIGHT) {
+            direction = Meta.MotionDirection.RIGHT;
+        } else if(this._side == St.Side.TOP) {
+            direction = Meta.MotionDirection.UP;
+        } else if (this._side == St.Side.BOTTOM) {
+            direction = Meta.MotionDirection.DOWN;
+        }
+
+        if (direction) {
+            let ws = activeWs.get_neighbor(direction);
+            Main.wm.actionMoveWorkspace(ws);
+        }
+
+    }
+
     _toggleOverview() {
         if (!this._settings.get_boolean('allow-fullscreen-mode')) {
             if (this._monitor.inFullscreen && !Main.overview.visible)
@@ -372,7 +419,10 @@ class HotScreenEdge extends Clutter.Actor {
         if (source != Main.xdndHandler)
             return DND.DragMotionResult.CONTINUE;
 
-        this._toggleOverview();
+        if (this._sideAction == 0)
+            this._toggleOverview();
+        else
+            this._switchWorkspace();
 
         return DND.DragMotionResult.CONTINUE;
     }
@@ -380,7 +430,10 @@ class HotScreenEdge extends Clutter.Actor {
     _onEdgeEntered() {
         if (!this._entered) {
             this._entered = true;
-            this._toggleOverview();
+            if (this._sideAction == 0)
+                this._toggleOverview();
+            else
+                this._switchWorkspace();
         }
         return Clutter.EVENT_PROPAGATE;
     }

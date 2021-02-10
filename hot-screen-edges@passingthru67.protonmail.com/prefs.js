@@ -177,47 +177,6 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
             this._settings.set_double("pressure-threshold", s);
         }));
 
-        // let speedLimitButton = new Gtk.CheckButton({
-        //     label: _("Limit pressure sense to slow mouse speeds"),
-        //     margin_left: 0,
-        //     margin_top: 0
-        // });
-        // speedLimitButton.set_active(this._settings.get_boolean('use-pressure-speed-limit'));
-        // speedLimitButton.connect('toggled', Lang.bind(this, function(check) {
-        //     this._settings.set_boolean('use-pressure-speed-limit', check.get_active());
-        // }));
-        //
-        // let speedLimitLabel = new Gtk.Label({
-        //     label: _("Maximum speed [px]"),
-        //     use_markup: true,
-        //     xalign: 0,
-        //     margin_left: 25,
-        //     margin_top: 0,
-        //     hexpand: true
-        // });
-        //
-        // let speedLimitSpinner = new Gtk.SpinButton({
-        //     halign: Gtk.Align.END,
-        //     margin_top: 0
-        // });
-        // speedLimitSpinner.set_sensitive(true);
-        // speedLimitSpinner.set_range(10, 1000);
-        // speedLimitSpinner.set_value(this._settings.get_double("pressure-speed-limit") * 1);
-        // speedLimitSpinner.set_increments(10, 20);
-        // speedLimitSpinner.connect("value-changed", Lang.bind(this, function(button) {
-        //     let s = button.get_value_as_int() / 1;
-        //     this._settings.set_double("pressure-speed-limit", s);
-        // }));
-        //
-        // let speedLimitDescription = new Gtk.Label({
-        //     label: _("NOTE: For dual monitor setups. Allows the mouse to pass through \nthe barrier by attacking the edge of the screen with a quick stroke."),
-        //     use_markup: true,
-        //     xalign: 0,
-        //     margin_left: 25,
-        //     margin_top: 0,
-        //     hexpand: false
-        // })
-
         // Add to layout
         let pressureOptionsGrid = new Gtk.Grid({
             row_homogeneous: false,
@@ -227,17 +186,10 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         pressureOptionsGrid.attach(requirePressureButton, 0, 0, 2, 1);
         pressureOptionsGrid.attach(pressureThresholdLabel, 0, 1, 1, 1);
         pressureOptionsGrid.attach(pressureThresholdSpinner, 1, 1, 1, 1);
-        // pressureOptionsGrid.attach(speedLimitButton, 0, 2, 2, 1);
-        // pressureOptionsGrid.attach(speedLimitLabel, 0, 3, 1, 1);
-        // pressureOptionsGrid.attach(speedLimitSpinner, 1, 3, 1, 1);
-        // pressureOptionsGrid.attach(speedLimitDescription, 0, 4, 2, 1);
 
         // Bind interactions
         this._settings.bind('require-pressure-to-show', pressureThresholdLabel, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('require-pressure-to-show', pressureThresholdSpinner, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
-        // this._settings.bind('use-pressure-speed-limit', speedLimitLabel, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
-        // this._settings.bind('use-pressure-speed-limit', speedLimitSpinner, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
-        // this._settings.bind('use-pressure-speed-limit', speedLimitDescription, 'sensitive', Gio.SettingsBindFlags.DEFAULT);
 
         this.add(pressureOptionsGrid);
     }

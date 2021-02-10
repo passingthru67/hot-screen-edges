@@ -157,12 +157,6 @@ var HotScreenEdgesManager = class HotScreenEdges_HotScreenEdgesManager {
         this._settings.connect('changed::pressure-threshold', () => {
             this._updateHotScreenEdges();
         });
-        // this._settings.connect('changed::use-pressure-speed-limit', () => {
-        //     this._updateHotScreenEdges();
-        // });
-        // this._settings.connect('changed::pressure-speed-limit', () => {
-        //     this._updateHotScreenEdges();
-        // });
     }
 };
 
@@ -216,15 +210,10 @@ class HotScreenEdge extends Clutter.Actor {
 
             let pressureThreshold = this._settings.get_double('pressure-threshold');
 
-            let speedLimit;
-            if (this._settings.get_boolean('use-pressure-speed-limit'))
-                speedLimit = this._settings.get_double('pressure-speed-limit');
-
-            this._pressureBarrier = new MyPressureBarrier(pressureThreshold, speedLimit, PRESSURE_TIMEOUT,
+            this._pressureBarrier = new MyPressureBarrier(pressureThreshold, PRESSURE_TIMEOUT,
                                 Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW);
 
             this._pressureBarrier.connect('trigger', this._onPressureSensed.bind(this));
-            this._pressureBarrier.connect('speed-exceeded', this._onSpeedExceeded.bind(this));
         }
     }
 
@@ -250,7 +239,6 @@ class HotScreenEdge extends Clutter.Actor {
         this._removeBarrier();
 
         // Manually reset pressure barrier
-        // This is necessary because we remove the barrier when it is triggered by the speed limit
         if (this._pressureBarrier) {
             this._pressureBarrier._reset();
             this._pressureBarrier._isTriggered = false;
@@ -303,29 +291,6 @@ class HotScreenEdge extends Clutter.Actor {
     _onPressureSensed() {
         this._pressureSensed = true;
         this._toggleOverview();
-    }
-
-    _onSpeedExceeded() {
-        // CONTINUE IF
-        // dock NOT in single monitor config
-        // dock NOT on first monitor && in left side
-        // dock NOT on last monitor && in right side
-        // if (this._settings.get_boolean('use-pressure-speed-limit')) {
-        //     if ((Main.layoutManager.monitors.length > 1) &&
-        //         !(this._monitor == 0 && this._side == St.Side.LEFT) &&
-        //         !(this._monitor == Main.layoutManager.monitors.length-1 && this._side == St.Side.RIGHT)) {
-        //
-        //         // Remove barrier immediately
-        //         this._removeBarrier();
-        //
-        //         // Restore barrier after short timeout
-        //         if (this._restoreBarrierTimeoutId > 0) {
-        //             GLib.source_remove(this._restoreBarrierTimeoutId);
-        //             this._restoreBarrierTimeoutId = 0;
-        //         }
-        //         this._restoreBarrierTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, this._updateBarrier.bind(this));
-        //     }
-        // }
     }
 
     _setupFallbackEdgeIfNeeded(layoutManager) {
@@ -439,9 +404,8 @@ class HotScreenEdge extends Clutter.Actor {
 
 
 var MyPressureBarrier = class HotScreenEdges_MyPressureBarrier {
-    constructor(threshold, speedLimit, timeout, actionMode) {
+    constructor(threshold, timeout, actionMode) {
         this._threshold = threshold;
-        this._speedLimit = speedLimit;
         this._timeout = timeout;
         this._actionMode = actionMode;
         this._barriers = [];
@@ -559,13 +523,6 @@ var MyPressureBarrier = class HotScreenEdges_MyPressureBarrier {
 
         let slide = this._getDistanceAlongBarrier(barrier, event);
         let distance = this._getDistanceAcrossBarrier(barrier, event);
-
-        // if (this._speedLimit && distance >= this._speedLimit) {
-        //     if (_DEBUG_) global.log("myPressureBarrier: _onBarrierHit speed-exceeded d = "+distance);
-        //     this.emit('speed-exceeded');
-        //     this._reset();
-        //     return;
-        // }
 
         if (distance >= this._threshold) {
             this._trigger();

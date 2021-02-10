@@ -15,6 +15,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 
 var PRESSURE_THRESHOLD = 100; // pixels
 var PRESSURE_TIMEOUT = 1000; // ms
+var CORNER_MARGIN = 10; // pixels
 
 
 var HotScreenEdgesManager = class HotScreenEdges_HotScreenEdgesManager {
@@ -270,27 +271,27 @@ class HotScreenEdge extends Clutter.Actor {
         if (this._canUsePressure && this._settings.get_boolean('require-pressure-to-show')) {
 
             let x1, x2, y1, y2, direction;
-            if(this._side==St.Side.LEFT){
+            if(this._side == St.Side.LEFT){
                 x1 = this._monitor.x;
                 x2 = this._monitor.x;
-                y1 = this._monitor.y;
-                y2 = this._monitor.y + this._monitor.height;
+                y1 = this._monitor.y + CORNER_MARGIN;
+                y2 = this._monitor.y + this._monitor.height - CORNER_MARGIN;
                 direction = Meta.BarrierDirection.POSITIVE_X;
-            } else if(this._side==St.Side.RIGHT) {
+            } else if(this._side == St.Side.RIGHT) {
                 x1 = this._monitor.x + this._monitor.width;
                 x2 = this._monitor.x + this._monitor.width;
-                y1 = this._monitor.y;
-                y2 = this._monitor.y + this._monitor.height;
+                y1 = this._monitor.y + CORNER_MARGIN;
+                y2 = this._monitor.y + this._monitor.height - CORNER_MARGIN;
                 direction = Meta.BarrierDirection.NEGATIVE_X;
-            } else if(this._side==St.Side.TOP) {
-                x1 = this._monitor.x;
-                x2 = this._monitor.x + this._monitor.width;
+            } else if(this._side == St.Side.TOP) {
+                x1 = this._monitor.x + CORNER_MARGIN;
+                x2 = this._monitor.x + this._monitor.width - CORNER_MARGIN;
                 y1 = this._monitor.y;
                 y2 = this._monitor.y;
                 direction = Meta.BarrierDirection.POSITIVE_Y;
-            } else if (this._side==St.Side.BOTTOM) {
-                x1 = this._monitor.x;
-                x2 = this._monitor.x + this._monitor.width;
+            } else if (this._side == St.Side.BOTTOM) {
+                x1 = this._monitor.x + CORNER_MARGIN;
+                x2 = this._monitor.x + this._monitor.width - CORNER_MARGIN;
                 y1 = this._monitor.y + this._monitor.height;
                 y2 = this._monitor.y + this._monitor.height;
                 direction = Meta.BarrierDirection.NEGATIVE_Y;
@@ -322,24 +323,24 @@ class HotScreenEdge extends Clutter.Actor {
         if (!this._canUsePressure || !this._settings.get_boolean('require-pressure-to-show')) {
 
             let x1, x2, y1, y2;
-            if(this._side==St.Side.LEFT){
+            if(this._side == St.Side.LEFT){
                 x1 = this._monitor.x;
                 x2 = this._monitor.x + 1;
-                y1 = this._monitor.y;
-                y2 = this._monitor.y + this._monitor.height;
-            } else if(this._side==St.Side.RIGHT) {
+                y1 = this._monitor.y + CORNER_MARGIN;
+                y2 = this._monitor.y + this._monitor.height - CORNER_MARGIN;
+            } else if(this._side == St.Side.RIGHT) {
                 x1 = this._monitor.x + this._monitor.width - 1;
                 x2 = this._monitor.x + this._monitor.width;
-                y1 = this._monitor.y;
-                y2 = this._monitor.y + this._monitor.height;
-            } else if(this._side==St.Side.TOP) {
-                x1 = this._monitor.x;
-                x2 = this._monitor.x + this._monitor.width;
+                y1 = this._monitor.y + CORNER_MARGIN;
+                y2 = this._monitor.y + this._monitor.height - CORNER_MARGIN;
+            } else if(this._side == St.Side.TOP) {
+                x1 = this._monitor.x + CORNER_MARGIN;
+                x2 = this._monitor.x + this._monitor.width - CORNER_MARGIN;
                 y1 = this._monitor.y;
                 y2 = this._monitor.y + 1;
-            } else if (this._side==St.Side.BOTTOM) {
-                x1 = this._monitor.x;
-                x2 = this._monitor.x + this._monitor.width;
+            } else if (this._side == St.Side.BOTTOM) {
+                x1 = this._monitor.x + CORNER_MARGIN;
+                x2 = this._monitor.x + this._monitor.width - CORNER_MARGIN;
                 y1 = this._monitor.y + this._monitor.height - 1;
                 y2 = this._monitor.y + this._monitor.height;
             }

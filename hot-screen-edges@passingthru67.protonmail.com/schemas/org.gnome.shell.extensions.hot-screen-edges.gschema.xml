@@ -3,6 +3,8 @@
     <enum id='org.gnome.shell.extensions.hot-screen-edges.actions'>
       <value value='0' nick='TOGGLE_OVERVIEW'/>
       <value value='1' nick='SWITCH_WORKSPACE'/>
+      <value value='2' nick='SWITCH_WORKSPACE_ONLY_IN_OVERVIEW'/>
+      <value value='3' nick='TOGGLE_TO_OVERVIEW_PLUS_SWITCH_WORKSPACE_ONLY_IN_OVERVIEW'/>
     </enum>
     <schema path="/org/gnome/shell/extensions/hot-screen-edges/" id="org.gnome.shell.extensions.hot-screen-edges">
         <key type="b" name="side-top">

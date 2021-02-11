@@ -92,6 +92,8 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let leftSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
         leftSideActionCombo.append_text(_("Toggle Overview"));
         leftSideActionCombo.append_text(_("Switch To Workspace"));
+        leftSideActionCombo.append_text(_("Switch To Workspace ONLY In Overview"));
+        leftSideActionCombo.append_text(_("Toggle To Overview + Switch To Workspace ONLY In Overview"));
 
         let leftSideAction = this._settings.get_enum('side-left-action');
         leftSideActionCombo.set_active(leftSideAction);
@@ -103,6 +105,8 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let rightSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
         rightSideActionCombo.append_text(_("Toggle Overview"));
         rightSideActionCombo.append_text(_("Switch To Workspace"));
+        rightSideActionCombo.append_text(_("Switch To Workspace ONLY In Overview"));
+        rightSideActionCombo.append_text(_("Toggle To Overview + Switch To Workspace ONLY In Overview"));
 
         let rightSideAction = this._settings.get_enum('side-right-action');
         rightSideActionCombo.set_active(rightSideAction);
@@ -114,6 +118,8 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let topSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
         topSideActionCombo.append_text(_("Toggle Overview"));
         topSideActionCombo.append_text(_("Switch To Workspace"));
+        topSideActionCombo.append_text(_("Switch To Workspace ONLY In Overview"));
+        topSideActionCombo.append_text(_("Toggle To Overview + Switch To Workspace ONLY In Overview"));
 
         let topSideAction = this._settings.get_enum('side-top-action');
         topSideActionCombo.set_active(topSideAction);
@@ -125,6 +131,8 @@ class HotScreenEdgesPreferencesWidget extends Gtk.Box {
         let bottomSideActionCombo = new Gtk.ComboBoxText({halign:Gtk.Align.END});
         bottomSideActionCombo.append_text(_("Toggle Overview"));
         bottomSideActionCombo.append_text(_("Switch To Workspace"));
+        bottomSideActionCombo.append_text(_("Switch To Workspace ONLY In Overview"));
+        bottomSideActionCombo.append_text(_("Toggle To Overview + Switch To Workspace ONLY In Overview"));
 
         let bottomSideAction = this._settings.get_enum('side-bottom-action');
         bottomSideActionCombo.set_active(bottomSideAction);

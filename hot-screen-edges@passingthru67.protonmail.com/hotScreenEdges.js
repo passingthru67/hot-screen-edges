@@ -17,6 +17,12 @@ var PRESSURE_THRESHOLD = 100; // pixels
 var PRESSURE_TIMEOUT = 1000; // ms
 var CORNER_MARGIN = 10; // pixels
 
+const HotActions = {
+    TOGGLE_OVERVIEW: 0,
+    SWITCH_WORKSPACE: 1,
+    SWITCH_WORKSPACE_ONLY_IN_OVERVIEW: 2,
+    TOGGLE_TO_OVERVIEW_PLUS_SWITCH_WORKSPACE_ONLY_IN_OVERVIEW: 3
+};
 
 var HotScreenEdgesManager = class HotScreenEdges_HotScreenEdgesManager {
     constructor() {
@@ -308,10 +314,20 @@ class HotScreenEdge extends Clutter.Actor {
     }
 
     _onPressureSensed() {
-        if (this._sideAction == 0)
+        if (_DEBUG_) global.log("HotScreenEdge: _onPressureSensed sideAction = "+this._sideAction);
+        if (this._sideAction == HotActions.TOGGLE_OVERVIEW) {
             this._toggleOverview();
-        else
+        } else if (this._sideAction == HotActions.SWITCH_WORKSPACE) {
             this._switchWorkspace();
+        } else if (this._sideAction == HotActions.SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+            if (Main.overview.visible)
+                this._switchWorkspace();
+        } else if (this._sideAction == HotActions.TOGGLE_TO_OVERVIEW_PLUS_SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+            if (Main.overview.visible)
+                this._switchWorkspace();
+            else
+                this._toggleOverview();
+        }
     }
 
     _setupFallbackEdgeIfNeeded(layoutManager) {
@@ -375,6 +391,7 @@ class HotScreenEdge extends Clutter.Actor {
     }
 
     _switchWorkspace() {
+        if (_DEBUG_) global.log("HotScreenEdge: _switchWorkspace");
         let workspaceManager = global.workspace_manager;
         let activeWs = workspaceManager.get_active_workspace();
         let direction;
@@ -397,6 +414,7 @@ class HotScreenEdge extends Clutter.Actor {
     }
 
     _toggleOverview() {
+        if (_DEBUG_) global.log("HotScreenEdge: _toggleOverview");
         if (!this._settings.get_boolean('allow-fullscreen-mode')) {
             if (this._monitor.inFullscreen && !Main.overview.visible)
                 return;
@@ -415,21 +433,40 @@ class HotScreenEdge extends Clutter.Actor {
         if (source != Main.xdndHandler)
             return DND.DragMotionResult.CONTINUE;
 
-        if (this._sideAction == 0)
+        if (this._sideAction == HotActions.TOGGLE_OVERVIEW) {
             this._toggleOverview();
-        else
+        } else if (this._sideAction == HotActions.SWITCH_WORKSPACE) {
             this._switchWorkspace();
+        } else if (this._sideAction == HotActions.SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+            if (Main.overview.visible)
+                this._switchWorkspace();
+        } else if (this._sideAction == HotActions.TOGGLE_TO_OVERVIEW_PLUS_SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+            if (Main.overview.visible)
+                this._switchWorkspace();
+            else
+                this._toggleOverview();
+        }
 
         return DND.DragMotionResult.CONTINUE;
     }
 
     _onEdgeEntered() {
         if (!this._entered) {
+            if (_DEBUG_) global.log("HotScreenEdge: _onEdgeEntered sideAction = "+this._sideAction);
             this._entered = true;
-            if (this._sideAction == 0)
+            if (this._sideAction == HotActions.TOGGLE_OVERVIEW) {
                 this._toggleOverview();
-            else
+            } else if (this._sideAction == HotActions.SWITCH_WORKSPACE) {
                 this._switchWorkspace();
+            } else if (this._sideAction == HotActions.SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+                if (Main.overview.visible)
+                    this._switchWorkspace();
+            } else if (this._sideAction == HotActions.TOGGLE_TO_OVERVIEW_PLUS_SWITCH_WORKSPACE_ONLY_IN_OVERVIEW) {
+                if (Main.overview.visible)
+                    this._switchWorkspace();
+                else
+                    this._toggleOverview();
+            }
         }
         return Clutter.EVENT_PROPAGATE;
     }

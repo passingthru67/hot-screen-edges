@@ -197,7 +197,6 @@ class HotScreenEdge extends Clutter.Actor {
 
         // Initialize pressure barrier variables
         this._canUsePressure = false;
-        this._pressureSensed = false;
         this._pressureBarrier = null;
         this._barrier = null;
         this._removeBarrierTimeoutId = 0;
@@ -306,13 +305,9 @@ class HotScreenEdge extends Clutter.Actor {
                 this._pressureBarrier.addBarrier(this._barrier);
             }
         }
-
-        // Reset pressureSensed flag
-        this._pressureSensed = false;
     }
 
     _onPressureSensed() {
-        this._pressureSensed = true;
         if (this._sideAction == 0)
             this._toggleOverview();
         else
